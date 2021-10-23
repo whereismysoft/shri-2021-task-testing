@@ -7,24 +7,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 
 import { Cart } from '../../../../src/client/pages/Cart';
-import { DefaultStoreType } from '../../helpers/store'
-
-const cartItems = {
-    '1': {
-        "name": "Sleek Bacon",
-        "count": 2,
-        "price": 543
-    },
-    '2': {
-        "name": "Fantastic Mouse",
-        "count": 3,
-        "price": 309
-    }
-}
+import { DefaultStoreType, defaultState, cartItems } from '../../helpers/store'
 
 type CartItemsType = keyof typeof cartItems
-
-const defaultState = { details: {}, cart: cartItems, latestOrderId: 1 };
 
 function createRootReducer(initialState: DefaultStoreType) {
     return (state = initialState, action: { type: string }) => {
