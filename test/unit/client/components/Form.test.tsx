@@ -28,11 +28,11 @@ function renderForm() {
 function changeInputValue(node: HTMLElement, value: string) {
     fireEvent.change(node, { target: { value } })
 
-    if (node.tagName.toLocaleLowerCase() === 'textarea') {
-        node.innerHTML = value
-    } else {
-        node.setAttribute('value', value)
-    }
+    // if (node.tagName.toLocaleLowerCase() === 'textarea') {
+    //     node.innerHTML = value
+    // } else {
+    //     node.setAttribute('value', value)
+    // }
 }
 
 const mockedSubmitValues = {

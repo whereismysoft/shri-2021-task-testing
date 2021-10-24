@@ -1,5 +1,5 @@
 // import '@testing-library/react/dont-cleanup-after-each'
-import { fireEvent, getByText } from "@testing-library/dom";
+import { fireEvent, getByText, screen } from "@testing-library/dom";
 
 import { Cart } from '../../../../src/client/pages/Cart';
 import { defaultState, renderApp, products, CartItemType } from '../../helpers/store'
@@ -19,6 +19,13 @@ const cartItems = products.reduce((acc: CartItemsType, item: CartItemType, idx: 
 
 const stateWithItems = { ...defaultState, cart: cartItems }
 
+
+it('Cart have correct count of items', () => {
+    const { getByTestId } = renderApp(Cart, stateWithItems)
+    const items = getByTestId(cartItems[0].id).parentElement.children
+
+    expect(items.length).toEqual(Object.keys(cartItems).length)
+})
 
 it('Cart should contain checkout form', () => {
     const { container } = renderApp(Cart, stateWithItems)
@@ -90,4 +97,10 @@ it('Last order information is visible in empty cart', () => {
     const lastOrderInfoBlock = getByText(/order # has been successfully completed\./i)
 
     expect(lastOrderInfoBlock).toBeInTheDocument()
+})
+
+it('Should render catalog link if cart is empty', () => {
+    const { getByRole } = renderApp(Cart, { ...defaultState })
+
+    expect(getByRole('link', { name: /catalog/i })).toBeInTheDocument()
 })

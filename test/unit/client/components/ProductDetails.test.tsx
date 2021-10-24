@@ -23,6 +23,21 @@ it('Should add item to cart', () => {
     expect(addedItemLabel).toBeInTheDocument()
 })
 
+// 
+
+it('Should display "item in cart" if item already in cart', () => {
+    const { getByText } = renderApp(
+        ProductDetails,
+        { ...defaultState, cart: { [productData.id]: productData } },
+        { product: productData }
+    )
+
+    const addedItemLabel = getByText(/item in cart/i)
+
+    expect(addedItemLabel).toBeInTheDocument()
+})
+
+
 it('Should not display text if item not in cart', () => {
     const { queryByText } = renderApp(ProductDetails, defaultState, { product: productData })
 
