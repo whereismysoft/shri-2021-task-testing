@@ -9,8 +9,8 @@ type CartItemsType = {
 }
 
 
-const cartItems = products.reduce((acc: CartItemsType, { ...item }: CartItemType, idx: number) => {
-    acc[idx] = {
+const cartItems = products.reduce((acc: CartItemsType, item: CartItemType, idx: number) => {
+    acc[item.id] = {
         ...item,
         count: Math.floor(Math.random() * 20)
     }
@@ -29,14 +29,14 @@ it('Cart should contain checkout form', () => {
 
 it('Cart should have added item', async () => {
     const { getByTestId } = renderApp(Cart, stateWithItems)
-    const blockWithItemName = getByText(getByTestId(0), cartItems[0].name)
+    const blockWithItemName = getByText(getByTestId(cartItems[0].id), cartItems[0].name)
 
     expect(blockWithItemName).toBeDefined()
 });
 
 it('Added item have correct price', async () => {
     const { getByTestId } = renderApp(Cart, stateWithItems)
-    const itemRow = Array.from(getByTestId(0).children)
+    const itemRow = Array.from(getByTestId(cartItems[0].id).children)
     const priceBlock = itemRow.find(el => el.className.includes('Price'))
     const expectedPrice = cartItems[0].price.toString()
 
@@ -45,7 +45,7 @@ it('Added item have correct price', async () => {
 
 it('Added item have correct total price', async () => {
     const { getByTestId } = renderApp(Cart, stateWithItems)
-    const itemRow = Array.from(getByTestId(0).children)
+    const itemRow = Array.from(getByTestId(cartItems[0].id).children)
     const totalPriceBlock = itemRow.find(el => el.className.includes('Total'))
     const expectedTotalPrice = (cartItems[0].price * cartItems[0].count).toString()
 
