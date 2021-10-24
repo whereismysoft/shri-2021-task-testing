@@ -1,13 +1,15 @@
-const { assert } = require('chai');
+const assert = require('chai').assert;
 
-describe('github', async function() {
-    it('Тест, который пройдет', async function() {
-        await this.browser.url('https://github.com/gemini-testing/hermione');
-        await this.browser.assertView('plain', '#readme', {
-            compositeImage: true,
-        });
+describe('github', async function () {
+    hermione.skip.in("chromeMobile", "");
+    it('should find hermione', async function () {
+        await this.browser.url('https://shri.yandex/hw/store/catalog');
+    });
 
-        const title = await this.browser.$('#readme h1').getText();
-        assert.equal(title, 'Hermione');
+    it('should work anywhere', async function () {
+        await this.browser.url('https://shri.yandex/hw/store/catalog');
     });
 });
+
+// добавление в карту различных продуктов
+// тесты для скриншотов (проврека адаптивности)

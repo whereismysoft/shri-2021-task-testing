@@ -1,6 +1,4 @@
-import { fireEvent, findByText, getByRole, getByText } from "@testing-library/dom";
-import { screen } from "@testing-library/react";
-import { link } from "fs";
+import { findByText, getByText } from "@testing-library/dom";
 
 import { Catalog } from '../../../../src/client/pages/Catalog';
 import { defaultState, products, renderApp } from '../../helpers/store'

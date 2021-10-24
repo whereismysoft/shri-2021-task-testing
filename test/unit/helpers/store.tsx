@@ -1,8 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router';
 import { createStore } from 'redux';
 import { render } from '@testing-library/react';
+import { createMemoryHistory } from 'history'
 
 export interface CartItemType {
     id?: number | string
@@ -65,13 +67,17 @@ export function createRootReducer(initialState: DefaultStoreType) {
     }
 }
 
-export function renderApp(Component: React.FC<any>, appStore: DefaultStoreType, props = {}) {
+export function renderApp(Component: React.FC<any>, appStore: DefaultStoreType, { props = {}, initRoute = '/' } = {}) {
+    const history = createMemoryHistory({
+        initialEntries: [initRoute],
+        initialIndex: 0
+    })
     const App = ({ initStore }: { initStore: DefaultStoreType }) => (
-        <BrowserRouter>
+        <Router history={history}>
             <Provider store={createStore(createRootReducer(initStore))}>
                 <Component {...props} />
             </Provider>
-        </BrowserRouter>
+        </Router>
     )
 
     return render(<App initStore={appStore} />)
