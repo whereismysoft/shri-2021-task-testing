@@ -2,23 +2,10 @@
 import { fireEvent, getByText, screen } from "@testing-library/dom";
 
 import { Cart } from '../../../../src/client/pages/Cart';
-import { defaultState, renderApp, products, CartItemType } from '../../helpers/store'
+import { defaultState, renderApp, products, generateCartItems } from '../../helpers/store'
 
-type CartItemsType = {
-    [key: string | number]: CartItemType
-}
-
-
-const cartItems = products.reduce((acc: CartItemsType, item: CartItemType, idx: number) => {
-    acc[item.id] = {
-        ...item,
-        count: Math.floor(Math.random() * 20)
-    }
-    return acc
-}, {})
-
+const cartItems = generateCartItems(products)
 const stateWithItems = { ...defaultState, cart: cartItems }
-
 
 it('Cart have correct count of items', () => {
     const { getByTestId } = renderApp(Cart, stateWithItems)

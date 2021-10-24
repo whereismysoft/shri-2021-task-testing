@@ -28,6 +28,54 @@ type ActionType = {
     product?: { id: number, name: string, price: number }
 }
 
+type CartItemsType = {
+    [key: string | number]: CartItemType
+}
+
+export function generateCartItems(productsArr: Array<CartItemType>) {
+    return productsArr.reduce((acc: CartItemsType, item: CartItemType) => {
+        acc[item.id] = {
+            ...item,
+            count: Math.floor(Math.random() * 20)
+        }
+        return acc
+    }, {})
+}
+
+export const defaultState: DefaultStoreType = { details: {}, cart: {}, latestOrderId: undefined, products: [] }
+
+export function createRootReducer(initialState: DefaultStoreType) {
+    return (state = initialState, action: ActionType) => {
+        switch (action.type) {
+            case 'ADD_TO_CART':
+                const { id, name, price } = action.product;
+                const draft = { ...state.cart }
+
+                if (!draft[id]) {
+                    draft[id] = { name, count: 0, price };
+                }
+
+                draft[id].count++;
+                return { ...state, cart: { ...draft }, latestOrderId: undefined } as DefaultStoreType
+            case 'CLEAR_CART':
+                return { ...state, cart: {}, latestOrderId: undefined } as DefaultStoreType
+            default:
+                return state
+        }
+    }
+}
+
+export function renderApp(Component: React.FC<any>, appStore: DefaultStoreType, props = {}) {
+    const App = ({ initStore }: { initStore: DefaultStoreType }) => (
+        <BrowserRouter>
+            <Provider store={createStore(createRootReducer(initStore))}>
+                <Component {...props} />
+            </Provider>
+        </BrowserRouter>
+    )
+
+    return render(<App initStore={appStore} />)
+}
 
 export const products = [
     {
@@ -86,38 +134,3 @@ export const products = [
         "price": 301
     }
 ]
-
-export const defaultState: DefaultStoreType = { details: {}, cart: {}, latestOrderId: undefined, products: [] }
-
-function createRootReducer(initialState: DefaultStoreType) {
-    return (state = initialState, action: ActionType) => {
-        switch (action.type) {
-            case 'ADD_TO_CART':
-                const { id, name, price } = action.product;
-                const draft = { ...state.cart }
-
-                if (!draft[id]) {
-                    draft[id] = { name, count: 0, price };
-                }
-
-                draft[id].count++;
-                return { ...state, cart: { ...draft }, latestOrderId: undefined } as DefaultStoreType
-            case 'CLEAR_CART':
-                return { ...state, cart: {}, latestOrderId: undefined } as DefaultStoreType
-            default:
-                return state
-        }
-    }
-}
-
-export function renderApp(Component: React.FC<any>, appStore: DefaultStoreType, props = {}) {
-    const App = ({ initStore }: { initStore: DefaultStoreType }) => (
-        <BrowserRouter>
-            <Provider store={createStore(createRootReducer(initStore))}>
-                <Component {...props} />
-            </Provider>
-        </BrowserRouter>
-    )
-
-    return render(<App initStore={appStore} />)
-}
