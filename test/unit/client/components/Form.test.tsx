@@ -128,8 +128,5 @@ it('Form fires submit event if fields are valid', () => {
     fireEvent.click(submitButton)
 
     expect(onFormSubmitMock.mock.calls.length).toBe(1)
-})
-
-it('Submit event arguments are correct', () => {
     expect(submitData).toEqual(mockedSubmitValues)
 })
