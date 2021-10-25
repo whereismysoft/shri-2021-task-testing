@@ -15,7 +15,11 @@ module.exports = {
         chrome: {
             desiredCapabilities: {
                 browserName: 'chrome',
-            }
+            },
+            windowSize: {
+                width: 1024,
+                height: 900
+            },
         },
         chromeMobile: {
             desiredCapabilities: {
@@ -33,3 +37,4 @@ module.exports = {
 
 // ./node_modules/.bin/hermione
 // ./node_modules/.bin/hermione gui
+// ./node_modules/.bin/hermione --update-refs
