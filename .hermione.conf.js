@@ -33,11 +33,11 @@ module.exports = {
             screenshotMode: 'viewport'
         },
     },
-    plugins: {
-        'html-reporter/hermione': {
-            path: 'hermione-html-reporter'
-        }
-    },
+    // plugins: {
+    //     'html-reporter/hermione': {
+    //         path: 'hermione-html-reporter'
+    //     }
+    // },
 };
 
 // selenium-standalone start
