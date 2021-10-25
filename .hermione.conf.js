@@ -20,6 +20,7 @@ module.exports = {
                 width: 1024,
                 height: 900
             },
+            screenshotMode: 'viewport'
         },
         chromeMobile: {
             desiredCapabilities: {
@@ -29,8 +30,14 @@ module.exports = {
                 width: 414,
                 height: 800
             },
+            screenshotMode: 'viewport'
         },
-    }
+    },
+    plugins: {
+        'html-reporter/hermione': {
+            path: 'hermione-html-reporter'
+        }
+    },
 };
 
 // selenium-standalone start
